@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import Sidemenu from './sidemenu';
 import Routes from './Routes';
 import LandingPage from './landingPage';
-
+import LandingRoutes from './LandingRoutes';
+import { BrowserRouter as Router} from 'react-router-dom';
 const GlobalStyle = createGlobalStyle`
   html {
     box-sizing: border-box;
@@ -48,7 +49,10 @@ class Layout extends Component {
             </Content>
 
             :
-            <LandingPage />
+              <Router>
+                <div>                <LandingRoutes />
+                </div>
+              </Router>
           }
 
             

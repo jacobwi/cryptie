@@ -2,35 +2,35 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Input } from 'semantic-ui-react';
 import { Transition, Button, Icon } from 'semantic-ui-react';
+import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import classnames from 'classnames';
+import propTypes from 'prop-types';
 
-import { signIn } from '../../actions';
+import { signUp } from '../../actions';
 import Avatar from '../../assets/avatar.png';
 
 /* START: CSS in JS */
 const Main = styled.div`
-  margin: 80px auto;
-
+    margin: 100px auto;
+    max-width: 900px;
 `
 const SignupContainer = styled.div`
-
     background-color: rgba(255, 255, 255, 0.78);
     border-radius: 10px;
     display: grid;
     grid-template-columns: 2fr 1fr;
     & .form {
-        padding-top:10px;
+        padding-top:50px;
         background: white;
         
         h2 {
             text-align: center;
-            margin-bottom: 40px;
             color: orange;
-        }      
+            margin-bottom: 40px;
+        }
         & input {
-
+            width: 100%;
             background: transparent;
             border: none;
             border-bottom: #242B39 solid 1px;
@@ -43,7 +43,7 @@ const SignupContainer = styled.div`
         }
     }
     & .button {
-        margin-top: 200px;
+        margin-top: 100px;
         padding: 0 !important;
         height: 40px;
         width: 100%;
@@ -67,7 +67,6 @@ const SignupContainer = styled.div`
 const AvatarContainer = styled.div`
     padding: 50px 20px 100px 100px;
 `
-
 const ArrowButton = styled(Link)`
     position: absolute;
     left: 0;
@@ -81,18 +80,19 @@ const ArrowButton = styled(Link)`
 `
 /* END: CSS in JS */
 
-class LoginPage extends Component {
+class SignupPage extends Component {
     constructor() {
         super();
         this.state = { 
             visible: false,
+            name: '',
             email: '',
             password: '',
-            errors: ''
+            passwordConfirmation: '',
+            errors: {}
         }
     }
     componentDidMount() {
-        console.log("login")
         this.setState({
             visible: true
         })
@@ -105,6 +105,7 @@ class LoginPage extends Component {
         }
     }
     onChange = (event) => {
+        console.log(event.target.value)
         this.setState({
             [event.target.name]: event.target.value
         })
@@ -114,12 +115,13 @@ class LoginPage extends Component {
         event.preventDefault();
         
         const User = {
+            name: this.state.name,
             email: this.state.email,
-            password: this.state.password
+            password: this.state.password,
+            passwordConfirmation: this.state.passwordConfirmation
         }
 
-        this.props.signIn(User, this.props.history);
-
+        this.props.signUp(User, this.props.history);
     }
     render() {
         const { visible, errors } = this.state
@@ -129,6 +131,7 @@ class LoginPage extends Component {
                 <Icon className='icon' name='arrow left' />
             </ArrowButton>
             <SignupContainer>
+                    
                 <AvatarContainer>
                     <Transition visible={visible} animation='fade up' duration={2000}>
                         <img src={Avatar} alt="upload"/>
@@ -136,8 +139,16 @@ class LoginPage extends Component {
                 </AvatarContainer>
                 <Transition visible={visible} animation='scale' duration={1000}>
                     <form className="form" onSubmit={this.onSubmit}>
-                        <h2>LOGIN</h2>
+                        <h2>New Account</h2>
 
+                        <Input fluid icon='users' iconPosition='left' placeholder='Full Name'
+                            type="text" name="name" value={this.state.name} onChange={this.onChange}
+                            className={classnames('', {
+                                'error': errors.name
+                            })}
+                        />
+                        <p>{errors.name && errors.name}</p>   
+                        <br />
                         <Input fluid icon='mail' iconPosition='left' placeholder='Email' 
                             type="email" name="email" value={this.state.email} onChange={this.onChange}
                             className={classnames('', {
@@ -154,12 +165,21 @@ class LoginPage extends Component {
                         />
                         <p>{errors.password && errors.password}</p>                        
                         <br />
-
-                        <Button  animated='vertical' className="button">
-                            <Button.Content visible>Login</Button.Content>
+                        { this.state.password &&                         
+                            <Input fluid icon='repeat' iconPosition='left' placeholder='Confirm Password' 
+                                type="password" name="passwordConfirmation" value={this.state.passwordConfirmation} onChange={this.onChange}
+                                className={classnames('', {
+                                    'error': errors.passwordConfirmation
+                                })}
+                            />
+                            
+                        }
+                        <p>{errors.passwordConfirmation && errors.passwordConfirmation}</p>
+                        <Button animated='vertical' className="button">
+                            <Button.Content visible>Sign Up</Button.Content>
                             <Button.Content hidden>
-                                <Icon className='icon' name='sign-in' />
-                            </Button.Content>
+                                <Icon className='icon' name='newspaper outline' />
+                                </Button.Content>
                         </Button> 
                     </form>
                 </Transition>
@@ -171,9 +191,14 @@ class LoginPage extends Component {
     }
 }
 
+SignupPage.propTypes = {
+    signUp: propTypes.func.isRequired,
+    auth: propTypes.object.isRequired
+}
+
 const mapStateToProps = (state) => ({
     auth: state.auth,
     errors: state.errors
 })
 
-export default connect(mapStateToProps, { signIn })(LoginPage);
+export default connect(mapStateToProps, { signUp })(SignupPage); 

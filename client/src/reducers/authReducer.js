@@ -3,7 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 
 // IN PRODUCTION ENV SET isAuth.. to false
 const INITIAL_STATE = {
-    isAuthenticated: true,
+    isAuthenticated: false,
     user: {}
 }
 

@@ -47,7 +47,7 @@ export const setFavorites = favorites => {
 // User actions
 export const signIn = (userData, history) => dispatch => {
   axios
-  .post('/api/users/login', userData)
+  .post('user/login', userData)
   .then(res => {
       const { token } = res.data;
       //tokenSetter(token)
@@ -73,8 +73,9 @@ localStorage.removeItem('jwtToken');
 }
 
 export const signUp = (userData, history) => dispatch => {
+  
   axios
-  .post('/api/users/register', userData)
+  .post('user/register', userData)
   .then(res => history.push('/login'))
   .catch(err =>
     dispatch({
