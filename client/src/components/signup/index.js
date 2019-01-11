@@ -12,16 +12,15 @@ import Avatar from '../../assets/avatar.png';
 
 /* START: CSS in JS */
 const Main = styled.div`
-    margin: 100px auto;
-    max-width: 900px;
+    margin: 40px auto;
 `
 const SignupContainer = styled.div`
     background-color: rgba(255, 255, 255, 0.78);
     border-radius: 10px;
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     & .form {
-        padding-top:50px;
+        padding: 40px 60px;
         background: white;
         
         h2 {
@@ -44,10 +43,10 @@ const SignupContainer = styled.div`
     }
     & .button {
         margin-top: 100px;
-        padding: 0 !important;
+        padding: 10px;
         height: 40px;
         width: 100%;
-        border-radius: 2px;
+        border-radius: 10px;
         background: white;
         border: 1px solid #242B39;
         color: #242B39 !important; 
@@ -65,7 +64,12 @@ const SignupContainer = styled.div`
 `
 
 const AvatarContainer = styled.div`
-    padding: 50px 20px 100px 100px;
+    padding: 40px 40px;
+    margin-top: 20px;
+    & img {
+        width: 100%;
+        height: auto;
+    }
 `
 const ArrowButton = styled(Link)`
     position: absolute;
@@ -85,7 +89,7 @@ class SignupPage extends Component {
         super();
         this.state = { 
             visible: false,
-            name: '',
+            fullname: '',
             email: '',
             password: '',
             passwordConfirmation: '',
@@ -115,7 +119,7 @@ class SignupPage extends Component {
         event.preventDefault();
         
         const User = {
-            name: this.state.name,
+            fullname: this.state.fullname,
             email: this.state.email,
             password: this.state.password,
             passwordConfirmation: this.state.passwordConfirmation
@@ -142,9 +146,9 @@ class SignupPage extends Component {
                         <h2>New Account</h2>
 
                         <Input fluid icon='users' iconPosition='left' placeholder='Full Name'
-                            type="text" name="name" value={this.state.name} onChange={this.onChange}
+                            type="text" name="fullname" value={this.state.name} onChange={this.onChange}
                             className={classnames('', {
-                                'error': errors.name
+                                'error': errors.fullname
                             })}
                         />
                         <p>{errors.name && errors.name}</p>   

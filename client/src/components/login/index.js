@@ -11,7 +11,7 @@ import Avatar from '../../assets/avatar.png';
 
 /* START: CSS in JS */
 const Main = styled.div`
-  margin: 80px auto;
+  margin: 40px auto;
 
 `
 const SignupContainer = styled.div`
@@ -19,9 +19,9 @@ const SignupContainer = styled.div`
     background-color: rgba(255, 255, 255, 0.78);
     border-radius: 10px;
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     & .form {
-        padding-top:10px;
+        padding: 40px 60px;
         background: white;
         
         h2 {
@@ -44,10 +44,10 @@ const SignupContainer = styled.div`
     }
     & .button {
         margin-top: 200px;
-        padding: 0 !important;
+        padding: 10px;
         height: 40px;
         width: 100%;
-        border-radius: 2px;
+        border-radius: 10px;
         background: white;
         border: 1px solid #242B39;
         color: #242B39 !important; 
@@ -65,7 +65,12 @@ const SignupContainer = styled.div`
 `
 
 const AvatarContainer = styled.div`
-    padding: 50px 20px 100px 100px;
+    padding: 40px 40px;
+    margin-top: 20px;
+    & img {
+        width: 100%;
+        height: auto;
+    }
 `
 
 const ArrowButton = styled(Link)`
@@ -118,8 +123,7 @@ class LoginPage extends Component {
             password: this.state.password
         }
 
-        this.props.signIn(User, this.props.history);
-
+        this.props.signIn(User, this.props.history)
     }
     render() {
         const { visible, errors } = this.state
@@ -129,11 +133,13 @@ class LoginPage extends Component {
                 <Icon className='icon' name='arrow left' />
             </ArrowButton>
             <SignupContainer>
-                <AvatarContainer>
-                    <Transition visible={visible} animation='fade up' duration={2000}>
+                <Transition visible={visible} animation='fade up' duration={2000}>
+                    <AvatarContainer>
+                    
                         <img src={Avatar} alt="upload"/>
-                    </Transition>
-                </AvatarContainer>
+                    
+                    </AvatarContainer>
+                </Transition>
                 <Transition visible={visible} animation='scale' duration={1000}>
                     <form className="form" onSubmit={this.onSubmit}>
                         <h2>LOGIN</h2>
@@ -173,7 +179,8 @@ class LoginPage extends Component {
 
 const mapStateToProps = (state) => ({
     auth: state.auth,
-    errors: state.errors
+    errors: state.errors,
+    favorite: state.favorite
 })
 
 export default connect(mapStateToProps, { signIn })(LoginPage);

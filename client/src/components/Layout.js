@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import { BrowserRouter as Router} from 'react-router-dom';
+
 import Sidemenu from './sidemenu';
 import Routes from './Routes';
-import LandingPage from './landingPage';
 import LandingRoutes from './LandingRoutes';
-import { BrowserRouter as Router} from 'react-router-dom';
+
 const GlobalStyle = createGlobalStyle`
   html {
     box-sizing: border-box;

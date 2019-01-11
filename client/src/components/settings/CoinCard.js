@@ -8,6 +8,7 @@ const Container = styled.div`
     padding: 12px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    
     &:hover {
         cursor: pointer;
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
@@ -17,6 +18,7 @@ const Container = styled.div`
 const CoinHeader = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
+    background: green;
 `
 
 const CoinContent = styled.div`
@@ -26,6 +28,7 @@ const CoinContent = styled.div`
         padding: 10px;
         
     }
+   
 `
 
 

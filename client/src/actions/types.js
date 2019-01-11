@@ -1,5 +1,5 @@
 export const GET_CURRENCY = "GET_CURRENCY"
-export const GET_FAVORITES = "GET_CURRENCY"
+export const GET_FAVORITES = "GET_FAVORITES"
 
 export const SET_CURRENCY = "SET_CURRENCY"
 export const SET_FAVORITES = "SET_FAVORITES";

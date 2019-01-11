@@ -6,15 +6,17 @@
   "scripts": {
     "client-install": "npm install --prefix ../client",
     "start": "node server.js",
-    "server": "nodemon server --exec babel-node",
+    "server": "nodemon --exec babel-node server.js",
     "client": "npm run dev --prefix ../client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "concurrently": "^4.1.0",
+    "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
+    "express-session": "^1.15.6",
     "jsonwebtoken": "^8.4.0",
     "lodash": "^4.17.11",
     "mongoose": "^5.4.3",

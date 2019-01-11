@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import Home from './home';
 import Dashboard from './dashboard';
 import Settings from './settings';
-import LoginPage from './login';
 
 const Frame = styled.div`
     margin: 0;

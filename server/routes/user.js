@@ -20,6 +20,7 @@ router.get('/test', (req, res) => {
 // @access  Public
 router.post('/register', (req, res) => {
     const { errors, isValid } = validateRegister(req.body);
+    console.log(req.body)
     // Check Validations
     if (!isValid) {
         return res.status(400).json(errors);
@@ -27,7 +28,7 @@ router.post('/register', (req, res) => {
     console.log("registering")
     let newUser = new UserModel({
         email: req.body.email,
-        username: req.body.username,
+        fullname: req.body.fullname,
         password: req.body.password
     });
 
@@ -43,11 +44,6 @@ router.post('/register', (req, res) => {
 // @desc    Login request
 // @access  Public
 router.post('/login', (req, res, next) => {
-    const { errors, isValid } = validateLogin(req.body);
-    // Check Validation
-    if (!isValid) {
-        return res.status(400).json(errors);
-    }
     passport.authenticate('local', function(err, user, info) {
         if (err) { return next(err); }
         if (!user) { return res.status(404).send("User not found"); }

@@ -1,9 +1,11 @@
+
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import morgan from 'morgan';
-
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
 
 import passportConfig from './config/passport.js';
 import router from './routes/user';
@@ -34,14 +36,22 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
+// Cookie parser
+app.use(cookieParser());
 
+// Express session init
+app.use(session({
+    secret: 'someSecret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}))
 
 // Passport config
 passportConfig(app);
 
 // Routes connection
 app.use('/user', router);
-
 
 // Initial GET method
 app.get('/', (req, res) => {

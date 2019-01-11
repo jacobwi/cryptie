@@ -2,7 +2,7 @@ import { SET_FAVORITES, GET_FAVORITES } from '../actions/types';
 
 const INITIAL_STATE = {
     isFirstTime: true,
-    favorties: {}
+    favorites: {}
 }
 export default function(state = INITIAL_STATE, action) {
     switch (action.type) {
@@ -12,7 +12,7 @@ export default function(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 isFirstTime: false,
-                favorties: [...action.payload]
+                favorites: [...action.payload]
             }
         default:
           return state;

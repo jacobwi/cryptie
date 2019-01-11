@@ -53,23 +53,33 @@ class Settings extends Component {
         super(props);
 
         this.state = { 
-            coinsMetaData: {},
-            finishedLoading: false,
-            renderCoins: this.renderCoins,
             favorites: [],
             handleAdd: this.handleAdd,
             handleRemove: this.handleRemove,
-            isInFavorites: this.isInFavorites
+            renderFavorties: this.renderFavorties,
+            isInFavorites: this.isInFavorites,
+            coinsMetaData: {},
+            finishedLoading: false,
+            renderCoins: this.renderCoins
+
         };
     }
     componentDidMount() {
-        this.setState({
-            coinsMetaData: this.props.currency.currencies,
-            favorites: this.props.favorite.favorties,
-            finishedLoading: true
-        })
+        console.log(this.props.favorite.favorites)
+        if (this.props.auth.isAuthenticated) {
+            this.setState({
+                coinsMetaData: this.props.currency.currencies,
+                finishedLoading: true
+            })
+            if (localStorage.getItem('favorites')) {
+                this.setState({
+                    favorites: this.props.favorite.favorites,
+                })
+            }
+        }
 
     }
+    
 
     isInFavorites = key => {
         return _.includes(this.state.favorites, key)
@@ -79,7 +89,8 @@ class Settings extends Component {
         return Object.keys(coinList).slice(0, 20)
     }
 
-    renderFavorties = (favorites) => {
+    renderFavorties =  favorites => {
+        console.log(favorites)
         return favorites
     }
 
@@ -93,7 +104,7 @@ class Settings extends Component {
         localStorage.setItem('favorites', JSON.stringify({
             favorites
         }))
-        this.props.setFavorites(this.state.favorites)
+        await this.props.setFavorites(this.state.favorites)
     }
 
     handleRemove = async (coin) => {
@@ -101,12 +112,14 @@ class Settings extends Component {
         await this.setState({
             favorites: _.pull(favorites, coin)
         })
-
+        localStorage.setItem('favorites', JSON.stringify({
+            favorites: _.pull(favorites, coin)
+        }))
         this.props.setFavorites(this.state.favorites)
     }
 
     render() {
-        const {  coinsMetaData, finishedLoading, renderCoins,favorites, handleAdd, handleRemove, isInFavorites } = this.state
+        const {  coinsMetaData, finishedLoading, renderCoins, favorites, handleAdd,  handleRemove, isInFavorites } = this.state
 
         if (finishedLoading) {
             return (
@@ -114,23 +127,23 @@ class Settings extends Component {
                     <Header as='h2'>
                         <Icon name='settings' color='grey' />
                         <Header.Content>
-                            Settings
+                            Settingss
 
                         </Header.Content>
                     </Header>
                     <h1>Favorites</h1>
-                    <Grid favorites>
-                        {this.renderFavorties(favorites).map(coin => (
-                            <div className='card'  key={coin} onClick={() => handleRemove(coin)}>
+                        <Grid favorites>
+                            { favorites.length >= 1 &&this.renderFavorties(favorites).map(coin => (
+                                <div className='card'  key={coin} onClick={() => handleRemove(coin)}>
 
-                                <CoinCard coin={coin} coinList={coinsMetaData} />
-                                <Overlay className="overlay">
-                                    <Icon name="minus"/>
-                                </Overlay>
-                            </div>
+                                    <CoinCard coin={coin} coinList={coinsMetaData} />
+                                    <Overlay className="overlay">
+                                        <Icon name="minus"/>
+                                    </Overlay>
+                                </div>
 
-                        ))}
-                    </Grid>
+                            ))}
+                        </Grid>
                     <h1>Select</h1>
                     <Grid>
                         {renderCoins(coinsMetaData).map(coin => (
@@ -160,7 +173,8 @@ class Settings extends Component {
 
 const mapStateToProps = (state) => ({
     favorite: state.favorite,
-    currency: state.currency
+    currency: state.currency,
+    auth: state.auth
   })
   
 export default connect(mapStateToProps, { setFavorites })(Settings);

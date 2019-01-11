@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import Home from './home';
-import Dashboard from './dashboard';
-import Settings from './settings';
 import LoginPage from './login';
 import LandingPage from './landingPage';
 import Layout from './Layout';

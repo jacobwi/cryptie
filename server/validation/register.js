@@ -4,11 +4,11 @@ const isEmpty = require('lodash/isEmpty');
 module.exports = function validateRegister(data) {
     let errors = {};
     
-    if (!Validator.isLength(data.name, {min: 2, max: 50})){
+    if (!Validator.isLength(data.fullname, {min: 2, max: 50})){
         errors.name = "Name must be between 2 and 50 characters";
     }
 
-    if (Validator.isEmpty(data.name)) {
+    if (Validator.isEmpty(data.fullname)) {
         errors.name = 'Name field is required';
     }
 

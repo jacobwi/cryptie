@@ -5,10 +5,13 @@ import bcrypt from 'bcryptjs';
 import { UserModel } from '../../model/User';
 
 export default function () { 
+
     passport.use(new LocalStrategy(
-        function(email, password, done) {
-            console.log("ho")
+            { usernameField: 'email' }, (email, password, done) => {
+
+            console.log(email)
             UserModel.findOne({ email }, function (err, user) {
+                console.log('find one ', user)
             if (err) { return done(err); }
             if (!user) {
               return done(null, false, { message: 'Incorrect username.' });

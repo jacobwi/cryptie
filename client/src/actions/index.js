@@ -1,5 +1,7 @@
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 
+import tokenSetter from '../utils/tokenSetter';
 import { SET_CURRENCY, SET_FAVORITES, GET_ERRORS, SET_USER } from './types';
 const CRYPTOCOMPARE_API_URI = 'https://min-api.cryptocompare.com/data/all/coinlist';
 
@@ -22,7 +24,7 @@ export const getCurriencies = () => dispatch => {
 
 
 
-export const getFavorties = () => dispatch => {
+export const getFavorites = () => dispatch => {
   if (localStorage.getItem('favorites')) {
     let { favorites } = JSON.parse(localStorage.getItem('favorites'));
     dispatch(setFavorites(favorites))
@@ -37,6 +39,7 @@ export const setCurrencies = currencies => {
 };
 
 export const setFavorites = favorites => {
+  console.log("dis", favorites)
     return {
       type: SET_FAVORITES,
       payload: favorites
@@ -50,11 +53,11 @@ export const signIn = (userData, history) => dispatch => {
   .post('user/login', userData)
   .then(res => {
       const { token } = res.data;
-      //tokenSetter(token)
+      tokenSetter(token)
       localStorage.setItem("jwtToken", token)
-      //const decoded = jwt_decode(token);
-      //dispatch(setUser(decoded));
-      history.push('/dashboard');
+      const decoded = jwt_decode(token);
+      dispatch(setUser(decoded));
+      history.push('/home');
   })
   .catch(err =>
     dispatch({
@@ -66,9 +69,9 @@ export const signIn = (userData, history) => dispatch => {
 
 export const signOut = () => dispatch => {
 
-dispatch(setUser({}));
-//tokenSetter(false);
-localStorage.removeItem('jwtToken');
+  dispatch(setUser({}));
+  tokenSetter(false);
+  localStorage.removeItem('jwtToken');
 
 }
 

@@ -21,18 +21,13 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true,
-        minlength: 6
+        minlength: 4
     },
-    tokens: [{
-        access: {
-            type: String,
-            required: true
-        },
-        token: {
-            type: String,
-            required: true
-        }
-    }]
+    fullname: {
+        type: String,
+        required: true,
+        minlength: 4
+    }
 });
 
 // User's password prehook
