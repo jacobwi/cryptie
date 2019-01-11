@@ -36,7 +36,7 @@ const Grid = styled.div`
         }
         width: 100%;
         height: 80%;
-       
+        background: ${props => props.favorites ? "red" : "green"};
     }
 `
 
@@ -46,6 +46,7 @@ const Overlay = styled.div`
     z-index: 99;
     bottom: 70px;
     opacity: 0;
+
 `
 
 class Settings extends Component {

@@ -18,7 +18,6 @@ const Container = styled.div`
 const CoinHeader = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
-    background: green;
 `
 
 const CoinContent = styled.div`
