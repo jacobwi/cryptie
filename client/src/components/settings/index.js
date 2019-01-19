@@ -102,9 +102,7 @@ class Settings extends Component {
         await this.setState({
             favorites: favorites
         })
-        localStorage.setItem('favorites', JSON.stringify({
-            favorites
-        }))
+        localStorage.setItem('favorites', JSON.stringify({favorites}))
         await this.props.setFavorites(this.state.favorites)
     }
 

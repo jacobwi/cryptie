@@ -9,6 +9,7 @@ import session from 'express-session';
 
 import passportConfig from './config/passport.js';
 import router from './routes/user';
+import profileRouter from './routes/profile';
 import {
     MongoURI
 } from './config';
@@ -52,7 +53,7 @@ passportConfig(app);
 
 // Routes connection
 app.use('/user', router);
-
+app.use('/profile', profileRouter);
 // Initial GET method
 app.get('/', (req, res) => {
     res.status(200).json({
